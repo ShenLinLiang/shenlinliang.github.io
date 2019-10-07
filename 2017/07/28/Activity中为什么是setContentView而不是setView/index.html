@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Android,View,Window,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="在Activity的onCreate函数中，第二行代码就是： 1setContentView(R.layout.activity_main);  大家都知道这个函数的作用，就是给当前Activity指定布局文件资源。那么有没有人有过这样的疑问：既然是给Activity指定布局文件资源，那为什么不直接是setView呢，反而还加了一个Content，这不是画蛇添足么。今天我就将这个谜题解开。">
+<meta name="keywords" content="Android,View,Window">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Activity中为什么是setContentView而不是setView">
+<meta property="og:url" content="http://yoursite.com/2017/07/28/Activity中为什么是setContentView而不是setView/index.html">
+<meta property="og:site_name" content="HelloWorld">
+<meta property="og:description" content="在Activity的onCreate函数中，第二行代码就是： 1setContentView(R.layout.activity_main);  大家都知道这个函数的作用，就是给当前Activity指定布局文件资源。那么有没有人有过这样的疑问：既然是给Activity指定布局文件资源，那为什么不直接是setView呢，反而还加了一个Content，这不是画蛇添足么。今天我就将这个谜题解开。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-29T09:53:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Activity中为什么是setContentView而不是setView">
+<meta name="twitter:description" content="在Activity的onCreate函数中，第二行代码就是： 1setContentView(R.layout.activity_main);  大家都知道这个函数的作用，就是给当前Activity指定布局文件资源。那么有没有人有过这样的疑问：既然是给Activity指定布局文件资源，那为什么不直接是setView呢，反而还加了一个Content，这不是画蛇添足么。今天我就将这个谜题解开。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/28/Activity中为什么是setContentView而不是setView/">
+
+
+
+
+
+  <title>Activity中为什么是setContentView而不是setView | HelloWorld</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HelloWorld</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/28/Activity中为什么是setContentView而不是setView/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="沈林良">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HelloWorld">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Activity中为什么是setContentView而不是setView</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-28T00:00:00+08:00">
+                2017-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在Activity的onCreate函数中，第二行代码就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setContentView(R.layout.activity_main);</span><br></pre></td></tr></table></figure>
+
+<p>大家都知道这个函数的作用，就是给当前Activity指定布局文件资源。那么有没有人有过这样的疑问：既然是给Activity指定布局文件资源，那为什么不直接是setView呢，反而还加了一个Content，这不是画蛇添足么。今天我就将这个谜题解开。</p>
+<a id="more"></a> 
+<h1 id="Activity的setContentView"><a href="#Activity的setContentView" class="headerlink" title="Activity的setContentView()"></a>Activity的setContentView()</h1><p>首先，我们看以下Activity的setContentView()的具体实现，源码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public void setContentView(@LayoutRes int layoutResID) &#123;</span><br><span class="line">    getWindow().setContentView(layoutResID);</span><br><span class="line">    initWindowDecorActionBar();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Emmmm，超级简单，通过前一篇文章可知，Android的Activity，Dialog，Toast等等都是附加在Window中的。这个函数的第一步就是获得当前Activity所附加在的Window并且调用他的setContentView方法。</p>
+<h1 id="Activity的Window创建过程"><a href="#Activity的Window创建过程" class="headerlink" title="Activity的Window创建过程"></a>Activity的Window创建过程</h1><p>那么这个Window是在什么时候创建的呢。这就要说道Activity的启动过程了，由于Activity的启动过程非常复杂，这里我就简单的说一下最终结果，最终由ActivityThread中的performLaunchActivity()来完成整个启动过程。这个方法的内部有这样一段代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">activity = mInstrumentation.newActivity(</span><br><span class="line">                    cl, component.getClassName(), r.intent);</span><br><span class="line">...				</span><br><span class="line">if (activity != null) &#123;</span><br><span class="line">    Context appContext = createBaseContextForActivity(r, activity);</span><br><span class="line">    CharSequence title = r.activityInfo.loadLabel(appContext.getPackageManager());</span><br><span class="line">    Configuration config = new Configuration(mCompatConfiguration);</span><br><span class="line">    ...</span><br><span class="line">	Window window = null;</span><br><span class="line">    activity.attach(appContext, this, getInstrumentation(), r.token,</span><br><span class="line">            r.ident, app, r.intent, r.activityInfo, title, r.parent,</span><br><span class="line">            r.embeddedID, r.lastNonConfigurationInstances, config,</span><br><span class="line">            r.referrer, r.voiceInteractor, window);</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，他首先通过了newActivity创建了一个Activity实例对象，然后在下面执行了activity的attach方法，我们看这个方法的最后一个参数，是一个<code>Null</code>的Window。那么很显然，这个方法就是创建Window的入口，并且他会在attach中把<code>Null</code>的Window给<code>new</code>一个出来。我们接着来看Activity中的attach方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">final void attach(Context context, ActivityThread aThread,</span><br><span class="line">            Instrumentation instr, IBinder token, int ident,</span><br><span class="line">            Application application, Intent intent, ActivityInfo info,</span><br><span class="line">            CharSequence title, Activity parent, String id,</span><br><span class="line">            NonConfigurationInstances lastNonConfigurationInstances,</span><br><span class="line">            Configuration config, String referrer, IVoiceInteractor voiceInteractor,</span><br><span class="line">            Window window) &#123;</span><br><span class="line">        attachBaseContext(context);</span><br><span class="line"></span><br><span class="line">        mFragments.attachHost(null /*parent*/);</span><br><span class="line">        mWindow = new PhoneWindow(this, window);</span><br><span class="line">        mWindow.setWindowControllerCallback(this);</span><br><span class="line">        mWindow.setCallback(this);</span><br><span class="line">        mWindow.setOnWindowDismissedCallback(this);</span><br><span class="line">        mWindow.getLayoutInflater().setPrivateFactory(this);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从这段代码可以看出，Window的实例对象果然是PhoneWindow，并且他还自己实现了Window的CallBack接口，这个接口的函数有很多，但我们也见过那么几个，比如dispatchTouchEvent，onDetachedFromWindow等等。</p>
+<p>至此我们就已经知道了，Activity的setContentView方法中的getWindow实际是获得PhoneWindow的对象，并且调用PhoneWindow中的setContentView方法，所以我们就只需要看PhoneWindow中setContentView的具体实现就可以了。</p>
+<h1 id="PhoneWindow的setContentView方法"><a href="#PhoneWindow的setContentView方法" class="headerlink" title="PhoneWindow的setContentView方法"></a>PhoneWindow的setContentView方法</h1><p>PhoneWindow的setContentView方法大致可以分为三个步骤。<br>再讲这三个步骤前，首先了解以下DecorView，DecorView是一个FrameLayout，它是Activity的顶级View，一般来说它包含标题栏和内容栏。但是根据主题不同可能会有不同的结果，比如你设置了无标题栏的主题，那么DecorView就不包含标题栏。但是内容栏是一定存在的，并且他的id是<code>android.R.id.content</code>。</p>
+<h2 id="如果DecorView不存在，那么就创建它"><a href="#如果DecorView不存在，那么就创建它" class="headerlink" title="如果DecorView不存在，那么就创建它"></a>如果DecorView不存在，那么就创建它</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (mContentParent == null) &#123;</span><br><span class="line">    installDecor();</span><br><span class="line">&#125; else if (!hasFeature(FEATURE_CONTENT_TRANSITIONS)) &#123;</span><br><span class="line">    mContentParent.removeAllViews();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到它调用了installDecor这个函数来初始化DecorView</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private void installDecor() &#123;</span><br><span class="line">...</span><br><span class="line">	mDecor = generateDecor(-1);</span><br><span class="line">	mContentParent = generateLayout(mDecor);</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>这个函数里有两行代码是关键，首先看到方法内部通过generateDecor来创建DecorView对象，我们先来看一下generateDecor的源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">protected DecorView generateDecor(int featureId) &#123;</span><br><span class="line">    // System process doesn&apos;t have application context and in that case we need to directly use</span><br><span class="line">    // the context we have. Otherwise we want the application context, so we don&apos;t cling to the</span><br><span class="line">    // activity.</span><br><span class="line">    ...</span><br><span class="line">    return new DecorView(context, featureId, this, getAttributes());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到关键代码，直接new一个DecorView并且返回，到此DecorView就实例化完成了。然后通过generateLayout加载布局文件到mDecor并且初始化mContentParent。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">protected ViewGroup generateLayout(DecorView decor) &#123;</span><br><span class="line">...</span><br><span class="line">	mDecor.onResourcesLoaded(mLayoutInflater, layoutResource);</span><br><span class="line">	ViewGroup contentParent = (ViewGroup)findViewById(ID_ANDROID_CONTENT);</span><br><span class="line">...</span><br><span class="line">	return contentParent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先调用DecorView的onResourcesLoaded方法加载布局文件，然后初始化contentParent，最后返回contentParent，至于<code>ID_ANDROID_CONTENT</code>它的值就是<code>android.R.id.content</code>。至此整个DecorView就创建完成了。</p>
+<h2 id="将View添加到mDecor的mContentParent中"><a href="#将View添加到mDecor的mContentParent中" class="headerlink" title="将View添加到mDecor的mContentParent中"></a>将View添加到mDecor的mContentParent中</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mLayoutInflater.inflate(layoutResID, mContentParent);</span><br></pre></td></tr></table></figure>
+
+<p>在PhoneWindow的setContentView方法中，执行完installDecor方法后，就直接将我们传进来的布局文件加载到了mContentParent中，到此为止，我们就能理解为什么是setContentView而不是setView了，因为Activity的布局文件只是被添加到了mDecor的mContentParent中，而mContentParent的id又恰巧是<code>android.R.id.content</code>，所以这才是setContentView的来源。既然我们已经知道为什么叫setContentView，那么我们继续接着看完整个步骤吧。</p>
+<h2 id="回调Activity的onContentChanged方法"><a href="#回调Activity的onContentChanged方法" class="headerlink" title="回调Activity的onContentChanged方法"></a>回调Activity的onContentChanged方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">final Callback cb = getCallback();</span><br><span class="line">    if (cb != null &amp;&amp; !isDestroyed()) &#123;</span><br><span class="line">        cb.onContentChanged();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>不过Activity中的onContentChanged方法是一个空方法，而我们可以在需要的时候，重写这个方法，达到你想要的目的。</p>
+<p>通过DecorView的创建过程和初始化过程，Activity的布局文件就设置到了DecorView的mContentParent中，但是这个时候DecorView还没有被WindowManager正式的添加到Window中，也就是还没有经过WindowManager的<code>addView</code>过程。在ActivityThread的handleResumeActivity中，首先调用Activity的<code>onResume</code>方法，然后会调用<code>makeVisible</code>方法，源码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void makeVisible() &#123;</span><br><span class="line">    if (!mWindowAdded) &#123;</span><br><span class="line">        ViewManager wm = getWindowManager();</span><br><span class="line">        wm.addView(mDecor, getWindow().getAttributes());</span><br><span class="line">        mWindowAdded = true;</span><br><span class="line">    &#125;</span><br><span class="line">    mDecor.setVisibility(View.VISIBLE);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此，Activity的视图就能够被我们所看到了。而整个setContentView的过程也就分析完了，如果我哪个地方写错了，欢迎大家纠正我的错误。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/View/" rel="tag"># View</a>
+          
+            <a href="/tags/Window/" rel="tag"># Window</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/27/理解Window的机制/" rel="next" title="理解Window的机制">
+                <i class="fa fa-chevron-left"></i> 理解Window的机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/29/Android消息机制/" rel="prev" title="Android消息机制">
+                Android消息机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="沈林良">
+          <p class="site-author-name" itemprop="name">沈林良</p>
+           
+              <p class="site-description motion-element" itemprop="description">这是一个博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Activity的setContentView"><span class="nav-number">1.</span> <span class="nav-text">Activity的setContentView()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Activity的Window创建过程"><span class="nav-number">2.</span> <span class="nav-text">Activity的Window创建过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PhoneWindow的setContentView方法"><span class="nav-number">3.</span> <span class="nav-text">PhoneWindow的setContentView方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如果DecorView不存在，那么就创建它"><span class="nav-number">3.1.</span> <span class="nav-text">如果DecorView不存在，那么就创建它</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将View添加到mDecor的mContentParent中"><span class="nav-number">3.2.</span> <span class="nav-text">将View添加到mDecor的mContentParent中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回调Activity的onContentChanged方法"><span class="nav-number">3.3.</span> <span class="nav-text">回调Activity的onContentChanged方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">沈林良</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.1"></script>
+
+
+</body>
+</html>

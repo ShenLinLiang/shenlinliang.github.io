@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Android,View,Window,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="Window和WindowManagerWindow是什么？Window表示一个窗口的概念，Window是一个抽象类，它的唯一具体实现类是PhoneWindow，这一点可以从源码可知。 The only existing implementation of this abstract class is android.view.PhoneWindow, which you should insta">
+<meta name="keywords" content="Android,View,Window">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解Window的机制">
+<meta property="og:url" content="http://yoursite.com/2017/07/27/理解Window的机制/index.html">
+<meta property="og:site_name" content="HelloWorld">
+<meta property="og:description" content="Window和WindowManagerWindow是什么？Window表示一个窗口的概念，Window是一个抽象类，它的唯一具体实现类是PhoneWindow，这一点可以从源码可知。 The only existing implementation of this abstract class is android.view.PhoneWindow, which you should insta">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-29T09:53:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解Window的机制">
+<meta name="twitter:description" content="Window和WindowManagerWindow是什么？Window表示一个窗口的概念，Window是一个抽象类，它的唯一具体实现类是PhoneWindow，这一点可以从源码可知。 The only existing implementation of this abstract class is android.view.PhoneWindow, which you should insta">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/27/理解Window的机制/">
+
+
+
+
+
+  <title>理解Window的机制 | HelloWorld</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HelloWorld</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/27/理解Window的机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="沈林良">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HelloWorld">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">理解Window的机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-27T00:00:00+08:00">
+                2017-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Window和WindowManager"><a href="#Window和WindowManager" class="headerlink" title="Window和WindowManager"></a>Window和WindowManager</h1><h2 id="Window是什么？"><a href="#Window是什么？" class="headerlink" title="Window是什么？"></a>Window是什么？</h2><p>Window表示一个窗口的概念，Window是一个抽象类，它的唯一具体实现类是PhoneWindow，这一点可以从源码可知。</p>
+<p><code>The only existing implementation of this abstract class is android.view.PhoneWindow, which you should instantiate when needing a Window.</code></p>
+<p>Android中的所有视图都是附加在Window上来展示的，无论是我们非常熟悉的Activity，Toast，状态栏等等，还是很少我们很少用到的PopupWindow，他们的视图都是附加在Window上的。所以，由此来说，Window还是View的直接管理者，从View的事件分发机制就可以知道，事件首先从Activity传到Window，然后在传到DecorView，接着进行下一步的传递。</p>
+<a id="more"></a> 
+
+<h2 id="WindowManager是什么？"><a href="#WindowManager是什么？" class="headerlink" title="WindowManager是什么？"></a>WindowManager是什么？</h2><p>WindowManager继承自ViewManager，其中在ViewManager这个接口中定义了三个方法，接口定义如下。而WindowManager也是一个接口，所以，ViewManager的真正实现类是WindowManager的实现类，也就是WindowManagerImpl。</p>
+<p>WindowManager具备以下三个功能：</p>
+<ol>
+<li>它可以通过addView方法创建一个Window并向其中添加View。</li>
+<li>它可以通过updateViewLayout方法更新Window中的View。</li>
+<li>它可以通过removeView方法删除一个Window，通过删除Window中的View。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public interface ViewManager</span><br><span class="line">&#123;</span><br><span class="line">    public void addView(View view, ViewGroup.LayoutParams params);</span><br><span class="line">    public void updateViewLayout(View view, ViewGroup.LayoutParams params);</span><br><span class="line">    public void removeView(View view);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Window的添加过程"><a href="#Window的添加过程" class="headerlink" title="Window的添加过程"></a>Window的添加过程</h1><p>通过WindowManager的addView方法来实现，而WindowManager是一个接口，所以addView方法的真正实现是在WindowManagerImpl中，WindowManagerImpl的三个方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public void addView(@NonNull View view, @NonNull ViewGroup.LayoutParams params) &#123;</span><br><span class="line">    applyDefaultToken(params);</span><br><span class="line">    mGlobal.addView(view, params, mContext.getDisplay(), mParentWindow);</span><br><span class="line">&#125;</span><br><span class="line">public void updateViewLayout(@NonNull View view, @NonNull ViewGroup.LayoutParams params) &#123;</span><br><span class="line">    applyDefaultToken(params);</span><br><span class="line">    mGlobal.updateViewLayout(view, params);</span><br><span class="line">&#125;</span><br><span class="line">public void removeView(View view) &#123;</span><br><span class="line">    mGlobal.removeView(view, false);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，WindowManagerImpl并没有自己实现这三个方法，而已交给了mGlobal来实现，mGlobal的定义如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private final WindowManagerGlobal mGlobal = WindowManagerGlobal.getInstance();</span><br></pre></td></tr></table></figure>
+
+<p>说明WindowManagerGlobal才是实现这三个操作的地方，并且可以发现WindowManagerGlobal是通过工厂模式对外提供自己实例的。</p>
+<p>下面我们看一看WindowManagerGlobal的addView方法：</p>
+<p>首先是三个参数的判断。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if (view == null) &#123;</span><br><span class="line">    throw new IllegalArgumentException(&quot;view must not be null&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if (display == null) &#123;</span><br><span class="line">    throw new IllegalArgumentException(&quot;display must not be null&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if (!(params instanceof WindowManager.LayoutParams)) &#123;</span><br><span class="line">throw new IllegalArgumentException(&quot;Params must be WindowManager.LayoutParams&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后是先新建一个ViewRootImpl对象，与我们传进来的View对应，并关联起来，然后将参数和ViewRootImpl对象都添加到相应的ArrayList列表中，然后通过ViewRootImpl的setView方法来更新界面并完成Window的添加过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ViewRootImpl root;</span><br><span class="line">root = new ViewRootImpl(view.getContext(), display);</span><br><span class="line">view.setLayoutParams(wparams);</span><br><span class="line">mViews.add(view);</span><br><span class="line">mRoots.add(root);</span><br><span class="line">mParams.add(wparams);</span><br><span class="line">try &#123;</span><br><span class="line">    root.setView(view, wparams, panelParentView);</span><br><span class="line">&#125; catch (RuntimeException e) &#123;</span><br><span class="line">    // BadTokenException or InvalidDisplayException, clean up.</span><br><span class="line">    synchronized (mLock) &#123;</span><br><span class="line">    	final int index = findViewLocked(view, false);</span><br><span class="line">		if (index &gt;= 0) &#123;</span><br><span class="line">			removeViewLocked(index, true);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    throw e;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ViewRootImpl的setView方法中调用了这样一个方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public void requestLayout() &#123;</span><br><span class="line">        if (!mHandlingLayoutInLayoutRequest) &#123;</span><br><span class="line">            checkThread();</span><br><span class="line">            mLayoutRequested = true;</span><br><span class="line">            scheduleTraversals();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法会调用scheduleTraversals，而scheduleTraversals实际是View的绘制入口，scheduleTraversals的内部有如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mChoreographer.postCallback(Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, null);</span><br></pre></td></tr></table></figure>
+
+<p>这行代码的意思往Choreographer的事件链表中放事件，放一个什么事件呢？</p>
+<p>答案是mTraversalRunnable。那么这个Runnable起着什么作用呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">final class TraversalRunnable implements Runnable &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        doTraversal();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只有一行代码，就是调用doTraversal方法。而在doTraversal方法中就会调用performTraversals方法，这就意味着View的measure，layout，draw从这里开始了。</p>
+<p>我们回到ViewRootImpl的setView方法中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    mOrigWindowType = mWindowAttributes.type;</span><br><span class="line">    mAttachInfo.mRecomputeGlobalAttributes = true;</span><br><span class="line">    collectViewAttributes();</span><br><span class="line">    res = mWindowSession.addToDisplay(mWindow, mSeq, mWindowAttributes,</span><br><span class="line">            getHostVisibility(), mDisplay.getDisplayId(),</span><br><span class="line">            mAttachInfo.mContentInsets, mAttachInfo.mStableInsets,</span><br><span class="line">            mAttachInfo.mOutsets, mInputChannel);</span><br><span class="line">&#125; catch (RemoteException e) &#123;</span><br><span class="line">    mAdded = false;</span><br><span class="line">    mView = null;</span><br><span class="line">    mAttachInfo.mRootView = null;</span><br><span class="line">    mInputChannel = null;</span><br><span class="line">    mFallbackEventHandler.setView(null);</span><br><span class="line">    unscheduleTraversals();</span><br><span class="line">    setAccessibilityFocus(null, null);</span><br><span class="line">    throw new RuntimeException(&quot;Adding window failed&quot;, e);</span><br><span class="line">&#125; finally &#123;</span><br><span class="line">    if (restore) &#123;</span><br><span class="line">        attrs.restore();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到关键地方addToDisplay方法，这个方法是IWindowSession的一个方法，通过名字大概可以猜到他是一个Binder对象，而事实也确实是一个Binder对象，他的真正实现类事Session，在Session的addToDisplay方法中会通过WindowManagerService来实现Window的添加。到此处为止，Window的添加就交给了WindowManagerService。</p>
+<h1 id="Window的删除过程"><a href="#Window的删除过程" class="headerlink" title="Window的删除过程"></a>Window的删除过程</h1><p>Window的删除过程与添加过程类似，都是通过WindowManagerGlobal来实现的。<br>下面我们继续看WindowManagerGlobal的removeView方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public void removeView(View view, boolean immediate) &#123;</span><br><span class="line">    if (view == null) &#123;</span><br><span class="line">        throw new IllegalArgumentException(&quot;view must not be null&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    synchronized (mLock) &#123;</span><br><span class="line">        int index = findViewLocked(view, true);</span><br><span class="line">        View curView = mRoots.get(index).getView();</span><br><span class="line">        removeViewLocked(index, immediate);</span><br><span class="line">        if (curView == view) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        throw new IllegalStateException(&quot;Calling with view &quot; + view</span><br><span class="line">            + &quot; but the ViewAncestor is attached to &quot; + curView);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先呢，也是对要移除的View的参数进行判断，然后通过findViewLocked来查找要删除的View的index，接着调用removeViewLocked进行进一步的删除，第二个参数的意义是是否立刻删除。有这个参数的原因是因为，WindowManager提供了两种删除接口，分别是removeView和removeViewImmediate。而他们的区别，一个是异步删除，而一个是同步删除。不过我们一般不需要使用removeViewImmediate，因为它可能会导致意外的错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private void removeViewLocked(int index, boolean immediate) &#123;</span><br><span class="line">    ViewRootImpl root = mRoots.get(index);</span><br><span class="line">    View view = root.getView();</span><br><span class="line">    if (view != null) &#123;</span><br><span class="line">        InputMethodManager imm = InputMethodManager.getInstance();</span><br><span class="line">        if (imm != null) &#123;</span><br><span class="line">            imm.windowDismissed(mViews.get(index).getWindowToken());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    boolean deferred = root.die(immediate);</span><br><span class="line">    if (view != null) &#123;</span><br><span class="line">        view.assignParent(null);</span><br><span class="line">        if (deferred) &#123;</span><br><span class="line">            mDyingViews.add(view);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从这段代码可以看出来，removeView和addView一样都是通过ViewRootImpl来实现的，首先，他获取和他关联的ViewRootImpl对象，然后调用他的die方法。这样remove这个操作就转移到了ViewRootImpl中。</p>
+<p>我们继续接着看ViewRootImpl中的die方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">boolean die(boolean immediate) &#123;</span><br><span class="line">    // Make sure we do execute immediately if we are in the middle of a traversal or the damage</span><br><span class="line">    // done by dispatchDetachedFromWindow will cause havoc on return.</span><br><span class="line">    if (immediate &amp;&amp; !mIsInTraversal) &#123;</span><br><span class="line">        doDie();</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (!mIsDrawing) &#123;</span><br><span class="line">        destroyHardwareRenderer();</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        Log.e(mTag, &quot;Attempting to destroy the window while drawing!\n&quot; +</span><br><span class="line">        &quot;  window=&quot; + this + &quot;, title=&quot; + mWindowAttributes.getTitle());</span><br><span class="line">    &#125;</span><br><span class="line">    mHandler.sendEmptyMessage(MSG_DIE);</span><br><span class="line">    return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>从这里就可以看出来，immediate参数的作用了，<code>if (immediate &amp;&amp; !mIsInTraversal)</code>则直接调用了doDie方法，反之，则只是发送了一个Message，然后在ViewRootImpl的mHandler中处理这个消息，而mHandler的处理很简单，就是直接调用了doDie方法。所以我们直接看doDie方法的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void doDie() &#123;</span><br><span class="line">	...</span><br><span class="line">	if (mRemoved) &#123;</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	mRemoved = true;</span><br><span class="line">	if (mAdded) &#123;</span><br><span class="line">		dispatchDetachedFromWindow();</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">	WindowManagerGlobal.getInstance().doRemoveView(this);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>doDie方法中最重要的就是<code>dispatchDetachedFromWindow</code>和<code>WindowManagerGlobal.getInstance().doRemoveView(this)</code>这两个方法了，dispatchDetachedFromWindow会执行真正的删除View，而doRemoveView则会处理View的后事。</p>
+<p>dispatchDetachedFromWindow中主要做两件事情</p>
+<ol>
+<li><p>调用View的dispatchDetachedFromWindow方法，而在这个方法内部就会回调我们熟悉的onDispatchFromWindow()和onDispatchFromWindowInternal()。由此，就可以说明，当一个View从Window移除时会回调这两个方法，而我们则可以在这两个回调方法中做View的资源回收，比如停止动画，停止线程等，防止内存泄漏。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (mView != null &amp;&amp; mView.mAttachInfo != null) &#123;</span><br><span class="line">    mAttachInfo.mTreeObserver.dispatchOnWindowAttachedChange(false);</span><br><span class="line">    mView.dispatchDetachedFromWindow();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>和addView一样，也会通过Session的remove方法删除Window，最终会传递到WindowManagerService中，并实现removeWindow。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mWindowSession.remove(mWindow);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>doRemoveView则主要进行刷新WindowManagerGlobal中的3个ArrayList的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">void doRemoveView(ViewRootImpl root) &#123;</span><br><span class="line">    synchronized (mLock) &#123;</span><br><span class="line">        final int index = mRoots.indexOf(root);</span><br><span class="line">        if (index &gt;= 0) &#123;</span><br><span class="line">            mRoots.remove(index);</span><br><span class="line">            mParams.remove(index);</span><br><span class="line">            final View view = mViews.remove(index);</span><br><span class="line">            mDyingViews.remove(view);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    if (ThreadedRenderer.sTrimForeground &amp;&amp; ThreadedRenderer.isAvailable()) &#123;</span><br><span class="line">        doTrimForeground();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此，Window的remove就到此结束了，如果我哪个地方写错了，欢迎大家纠正我的错误。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/View/" rel="tag"># View</a>
+          
+            <a href="/tags/Window/" rel="tag"># Window</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/28/Activity中为什么是setContentView而不是setView/" rel="prev" title="Activity中为什么是setContentView而不是setView">
+                Activity中为什么是setContentView而不是setView <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="沈林良">
+          <p class="site-author-name" itemprop="name">沈林良</p>
+           
+              <p class="site-description motion-element" itemprop="description">这是一个博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Window和WindowManager"><span class="nav-number">1.</span> <span class="nav-text">Window和WindowManager</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Window是什么？"><span class="nav-number">1.1.</span> <span class="nav-text">Window是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WindowManager是什么？"><span class="nav-number">1.2.</span> <span class="nav-text">WindowManager是什么？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Window的添加过程"><span class="nav-number">2.</span> <span class="nav-text">Window的添加过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Window的删除过程"><span class="nav-number">3.</span> <span class="nav-text">Window的删除过程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">沈林良</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.1"></script>
+
+
+</body>
+</html>

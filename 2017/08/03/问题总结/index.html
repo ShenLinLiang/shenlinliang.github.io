@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Android">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="char能否存储汉字答：能，因为char采用Unicode编码，每个字符占两个字节，而一个汉字刚好两个字节。测试如下： 1234public static void main(String[] args) &amp;#123;	char a = &amp;apos;嗨&amp;apos;;	System.out.println(a);&amp;#125;  正常输出嗨，无报错。 booleanboolean 类型单独使用四个字节">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题总结">
+<meta property="og:url" content="http://yoursite.com/2017/08/03/问题总结/index.html">
+<meta property="og:site_name" content="HelloWorld">
+<meta property="og:description" content="char能否存储汉字答：能，因为char采用Unicode编码，每个字符占两个字节，而一个汉字刚好两个字节。测试如下： 1234public static void main(String[] args) &amp;#123;	char a = &amp;apos;嗨&amp;apos;;	System.out.println(a);&amp;#125;  正常输出嗨，无报错。 booleanboolean 类型单独使用四个字节">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/objectneicun.png">
+<meta property="og:image" content="http://yoursite.com/images/LeakCanary.jpg">
+<meta property="og:image" content="http://yoursite.com/images/hashmapandhashset.png">
+<meta property="og:image" content="http://yoursite.com/images/appluncher.png">
+<meta property="og:updated_time" content="2017-09-27T12:07:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="问题总结">
+<meta name="twitter:description" content="char能否存储汉字答：能，因为char采用Unicode编码，每个字符占两个字节，而一个汉字刚好两个字节。测试如下： 1234public static void main(String[] args) &amp;#123;	char a = &amp;apos;嗨&amp;apos;;	System.out.println(a);&amp;#125;  正常输出嗨，无报错。 booleanboolean 类型单独使用四个字节">
+<meta name="twitter:image" content="http://yoursite.com/images/objectneicun.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/03/问题总结/">
+
+
+
+
+
+  <title>问题总结 | HelloWorld</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HelloWorld</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/03/问题总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="沈林良">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HelloWorld">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">问题总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-03T00:00:00+08:00">
+                2017-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="char能否存储汉字"><a href="#char能否存储汉字" class="headerlink" title="char能否存储汉字"></a>char能否存储汉字</h1><p>答：能，因为char采用Unicode编码，每个字符占两个字节，而一个汉字刚好两个字节。测试如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">	char a = &apos;嗨&apos;;</span><br><span class="line">	System.out.println(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>正常输出<code>嗨</code>，无报错。</p>
+<h1 id="boolean"><a href="#boolean" class="headerlink" title="boolean"></a>boolean</h1><p>boolean 类型单独使用四个字节（虚拟机中用int类型存储，为什么不用byte或者short？）<br>boolean 类型数组使用一个字节（虚拟机中用byte数组存储）</p>
+<a id="more"></a> 
+
+<h1 id="自动拆箱和装箱"><a href="#自动拆箱和装箱" class="headerlink" title="自动拆箱和装箱"></a>自动拆箱和装箱</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Integer i1 = 100;</span><br><span class="line">Integer i2 = 100;</span><br><span class="line">Integer i3 = 200;</span><br><span class="line">Integer i4 = 200;</span><br><span class="line"></span><br><span class="line">System.out.println(i1 == i2);</span><br><span class="line">System.out.println(i3 == i4);</span><br></pre></td></tr></table></figure>
+
+<p>输出：<br>true<br>false</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public static Integer valueOf(int i) &#123;</span><br><span class="line">	if (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">		return IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">	return new Integer(i);</span><br><span class="line">&#125;</span><br><span class="line">private static class IntegerCache &#123;</span><br><span class="line">	static final int low = -128;</span><br><span class="line">	static final int high;</span><br><span class="line">	static final Integer cache[];</span><br><span class="line"></span><br><span class="line">	static &#123;</span><br><span class="line">		// high value may be configured by property</span><br><span class="line">		int h = 127;</span><br><span class="line">		String integerCacheHighPropValue =</span><br><span class="line">			sun.misc.VM.getSavedProperty(&quot;java.lang.Integer.IntegerCache.high&quot;);</span><br><span class="line">		if (integerCacheHighPropValue != null) &#123;</span><br><span class="line">			try &#123;</span><br><span class="line">				int i = parseInt(integerCacheHighPropValue);</span><br><span class="line">				i = Math.max(i, 127);</span><br><span class="line">				// Maximum array size is Integer.MAX_VALUE</span><br><span class="line">				h = Math.min(i, Integer.MAX_VALUE - (-low) -1);</span><br><span class="line">			&#125; catch( NumberFormatException nfe) &#123;</span><br><span class="line">				// If the property cannot be parsed into an int, ignore it.</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		high = h;</span><br><span class="line"></span><br><span class="line">		cache = new Integer[(high - low) + 1];</span><br><span class="line">		int j = low;</span><br><span class="line">		for(int k = 0; k &lt; cache.length; k++)</span><br><span class="line">			cache[k] = new Integer(j++);</span><br><span class="line"></span><br><span class="line">		// range [-128, 127] must be interned (JLS7 5.1.7)</span><br><span class="line">		assert IntegerCache.high &gt;= 127;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private IntegerCache() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当数值在[-128,127]之间时，直接从IntegerCache拿，所以i1，i2是直接从IntegerCache中拿的，自然是同一个对象，而i3，i4不在这个IntegerCache中，需要重新创建对象，自然就指向堆中不同的位置</p>
+<h1 id="抽象类和接口"><a href="#抽象类和接口" class="headerlink" title="抽象类和接口"></a>抽象类和接口</h1><p>答：<br>抽象类：</p>
+<ol>
+<li>抽象类可以包含具体实现的方法，但如果有一个抽象方法就必须声明为抽象类，抽象方法加<code>abstract</code>关键字。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public abstract class Demo </span><br><span class="line">&#123;</span><br><span class="line">    abstract void foo1();</span><br><span class="line">    void foo2()&#123;</span><br><span class="line">        //实现</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>抽象类可以不被实例化，但可以有构造函数（为什么可以new？）。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">abstractTest a1 = new abstractTest() &#123;</span><br><span class="line">	@Override</span><br><span class="line">	void foo1() &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>这是一个匿名类，实际是子类<code>@Override</code><br>3. abstract不能与private、static、final或native并列修饰同一个方法。<br>4. 抽象类可以包含普通成员变量和静态成员变量，其访问类型可以任意。</p>
+<p>接口：</p>
+<ol>
+<li><p>接口不能包含具体实现的方法，也不需要加<code>abstract</code>关键字。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">interface Demo</span><br><span class="line">&#123;</span><br><span class="line">    // 接口中的方法自动转为public abstract</span><br><span class="line">    void foo1();</span><br><span class="line">    void foo2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口中不能有构造方法。</p>
+</li>
+<li><p>接口所有方法只能为<code>public</code>。</p>
+</li>
+<li><p>接口可以定义”成员变量”，而且会自动转为public final static，即常量，而且必须被显式初始化。</p>
+</li>
+</ol>
+<h1 id="new一个空的Object，占用几个字节（Object-object-new-Object-）"><a href="#new一个空的Object，占用几个字节（Object-object-new-Object-）" class="headerlink" title="new一个空的Object，占用几个字节（Object object = new Object();）"></a>new一个空的Object，占用几个字节（Object object = new Object();）</h1><ol>
+<li>32位JDK：object引用占4个字节，64位JDK：object引用占8个字节。</li>
+<li>32位JDK：堆内存中一个Object对象占8个字节，64位JDK：堆内存中一个Object对象占16个字节。</li>
+<li>32位JDK：总占12个字节，64位JDK：总占24个字节</li>
+</ol>
+<p><img src="/images/objectneicun.png" alt="内存占用"></p>
+<h1 id="Volatile的适用场景"><a href="#Volatile的适用场景" class="headerlink" title="Volatile的适用场景"></a>Volatile的适用场景</h1><p>Volatile：原子性，可见性，有序性</p>
+<ol>
+<li>当只有一个线程可以修改字段的值，其它线程可以随时读取，那么把字段声明为volatile是合理的。</li>
+</ol>
+<h1 id="静态方法能否调用非静态方法"><a href="#静态方法能否调用非静态方法" class="headerlink" title="静态方法能否调用非静态方法"></a>静态方法能否调用非静态方法</h1><p>答：不能。</p>
+<h1 id="synchronized和Lock"><a href="#synchronized和Lock" class="headerlink" title="synchronized和Lock"></a>synchronized和Lock</h1><p>synchronized：<br>两种锁：</p>
+<ol>
+<li>锁对象：针对对象而言<br>两种方法<br>第一种：给方法添加synchronized关键字。<br>第二种添加synchronized代码块。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public class test &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		final A a1 = new A();</span><br><span class="line">		final A a2 = new A();</span><br><span class="line">		Thread thread1 = new Thread() &#123;</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				a1.foo1(&quot;thread1:&quot;);</span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;;</span><br><span class="line">		Thread thread2 = new Thread() &#123;</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				a2.foo1(&quot;thread2:&quot;);</span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;;</span><br><span class="line">	</span><br><span class="line">		thread1.start();</span><br><span class="line">		thread2.start();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">class A &#123;</span><br><span class="line">	Object object;</span><br><span class="line">	public synchronized void  foo1(String who) &#123;</span><br><span class="line">		for (int i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">			System.out.println(who + &quot; foo1 &quot; + i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public void foo2(String who) &#123;</span><br><span class="line">		synchronized (object) &#123;</span><br><span class="line">			for (int i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">				System.out.println(who + &quot; foo2 &quot; + i);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>`<br>第一步执行结果：不加锁<br>a1 thread1: foo1 0<br>a1 thread2: foo1 0<br>a1 thread1: foo1 1<br>a1 thread2: foo1 1<br>a1 thread1: foo1 2<br>a1 thread2: foo1 2<br>a1 thread1: foo1 3<br>a1 thread2: foo1 3<br>a1 thread1: foo1 4<br>a1 thread2: foo1 4</p>
+<p>第二步执行结果：同一对象同一synchronized方法<br>a1 thread1: foo1 0<br>a1 thread1: foo1 1<br>a1 thread1: foo1 2<br>a1 thread1: foo1 3<br>a1 thread1: foo1 4<br>a1 thread2: foo1 0<br>a1 thread2: foo1 1<br>a1 thread2: foo1 2<br>a1 thread2: foo1 3<br>a1 thread2: foo1 4</p>
+<p>第三步执行结果：不同对象同一synchronized方法<br>a1 thread1: foo1 0<br>a2 thread2: foo1 0<br>a1 thread1: foo1 1<br>a2 thread2: foo1 1<br>a1 thread1: foo1 2<br>a2 thread2: foo1 2<br>a1 thread1: foo1 3<br>a2 thread2: foo1 3<br>a1 thread1: foo1 4<br>a2 thread2: foo1 4</p>
+<p>`<br>2. 锁类：针对类而言</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public class test &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		final A a1 = new A();</span><br><span class="line">		final A a2 = new A();</span><br><span class="line">		Thread thread1 = new Thread() &#123;</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				a1.foo1(&quot;thread1:&quot;);</span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;;</span><br><span class="line">		Thread thread2 = new Thread() &#123;</span><br><span class="line">			public void run() &#123;</span><br><span class="line">				a2.foo1(&quot;thread2:&quot;);</span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;;</span><br><span class="line">	</span><br><span class="line">		thread1.start();</span><br><span class="line">		thread2.start();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">class A &#123;</span><br><span class="line">	Object object;</span><br><span class="line">	//static方法，属于类的方法</span><br><span class="line">	public static synchronized void  foo1(String who) &#123;</span><br><span class="line">		for (int i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">			System.out.println(who + &quot; foo1 &quot; + i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public void foo2(String who) &#123;</span><br><span class="line">		//锁类即synchronized的参数位（类.class）</span><br><span class="line">		synchronized (A.class) &#123;</span><br><span class="line">			for (int i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">				System.out.println(who + &quot; foo2 &quot; + i);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>`<br>第一步执行结果：static方法加锁结果<br>a1 thread1: foo1 0<br>a1 thread1: foo1 1<br>a1 thread1: foo1 2<br>a1 thread1: foo1 3<br>a1 thread1: foo1 4<br>a1 thread2: foo1 0<br>a1 thread2: foo1 1<br>a1 thread2: foo1 2<br>a1 thread2: foo1 3<br>a1 thread2: foo1 4</p>
+<p>第二步：普通成员函数锁A.class结果：</p>
+<p>a1 thread1: foo2 0<br>a1 thread1: foo2 1<br>a1 thread1: foo2 2<br>a1 thread1: foo2 3<br>a1 thread1: foo2 4<br>a2 thread2: foo2 0<br>a2 thread2: foo2 1<br>a2 thread2: foo2 2<br>a2 thread2: foo2 3<br>a2 thread2: foo2 4<br>`<br>从第二步结果可看出，如果是对象锁，则应该是乱序，而是类锁时，则是正确的顺序。</p>
+<p>synchronized的缺陷：</p>
+<ol>
+<li>可能会造成死锁</li>
+<li>如果第一个线程不释放这个锁（比如产生了阻塞，或者非常耗时的操作），那么A线程将永远等待下去，无法被中断。</li>
+<li>不能实现并发<code>读</code>功能，如果多个线程都只是进行读操作，所以当一个线程在进行读操作时，其他线程只能等待无法进行读操作。</li>
+</ol>
+<p>Lock：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public interface Lock &#123;</span><br><span class="line">    void lock();</span><br><span class="line">    void lockInterruptibly() throws InterruptedException;</span><br><span class="line">    boolean tryLock();</span><br><span class="line">    boolean tryLock(long time, TimeUnit unit) throws InterruptedException;</span><br><span class="line">    void unlock();</span><br><span class="line">    Condition newCondition();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>lock：首先lock()方法是平常使用得最多的一个方法，就是用来获取锁。如果锁已被其他线程获取，则进行等待。<br>tryLock：tryLock()方法是有返回值的，它表示用来尝试获取锁，如果获取成功，则返回true，如果获取失败（即锁已被其他线程获取），则返回false，也就说这个方法无论如何都会立即返回。在拿不到锁时不会一直在那等待。<br>boolean tryLock(long time, TimeUnit unit)：和tryLock类似，不过不会立即返回，他会等待你传递给他的参数<code>time</code>，如果超过没有获取成功，则返回。<br>lockInterruptibly：lockInterruptibly()方法比较特殊，当通过这个方法去获取锁时，如果线程正在等待获取锁，则这个线程能够响应中断，即中断线程的等待状态。也就使说，当两个线程同时通过lock.lockInterruptibly()想获取某个锁时，假若此时线程A获取到了锁，而线程B只有在等待，那么对线程B调用threadB.interrupt()方法能够中断线程B的等待过程。<br>unlock：unLock()方法是用来释放锁的。<code>如果不调用unlock则不会主动释放锁，很有可能会导致死锁。</code></p>
+<h1 id="Java的特性"><a href="#Java的特性" class="headerlink" title="Java的特性"></a>Java的特性</h1><h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><h1 id="设计模式六大原则"><a href="#设计模式六大原则" class="headerlink" title="设计模式六大原则"></a>设计模式六大原则</h1><h2 id="单一职责"><a href="#单一职责" class="headerlink" title="单一职责"></a>单一职责</h2><h2 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h2><h2 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h2><h2 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h2><h2 id="迪米特法则"><a href="#迪米特法则" class="headerlink" title="迪米特法则"></a>迪米特法则</h2><h2 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h2><h1 id="Java-中引用类型都有哪些"><a href="#Java-中引用类型都有哪些" class="headerlink" title="Java 中引用类型都有哪些"></a>Java 中引用类型都有哪些</h1><p>答：</p>
+<ol>
+<li>强引用：new出来的对象就是强引用，在虚拟机内存不足的情况下，也不会回收强引用对象<br><code>Object object = new Object();</code></li>
+<li>软引用：用SoftReference类来实现软引用，在虚拟机内存不足的情况下，会回收掉软引用对象，如果这次回收还没有足够的内存，则会抛出内存溢出异常。<br><code>Map&lt;String, SoftReference&lt;Drawable&gt;&gt; mImageCache = new HashMap&lt;String,SoftReference&lt;Drawable&gt;&gt;();</code></li>
+<li>弱引用：用WeakReference类来实现弱引用，即使虚拟机内存充足，也会回收掉弱引用对象，活不过下一次垃圾收集。</li>
+<li>虚引用：用PhantomReference类来实现虚引用，几乎没有实际意义，唯一的作用就是在这个对象被回收时能够收到一个系统通知。</li>
+</ol>
+<h1 id="Parcelable和Serializable-俩者异同"><a href="#Parcelable和Serializable-俩者异同" class="headerlink" title="Parcelable和Serializable 俩者异同"></a>Parcelable和Serializable 俩者异同</h1><p>1、Serializable在序列化的时候会产生大量的临时变量，从而引起频繁的GC；<br>2、在使用内存的时候，Parcelable比Serializable性能高，所以推荐使用Parcelable。<br>3、Parcelable不能使用在要将数据存储在磁盘上的情况，因为Parcelable不能很好的保证数据的持续性在外界有变化的情况下。尽管Serializable效率低点，但此时还是建议使用Serializable 。</p>
+<h1 id="gt-gt-与-gt-gt-gt-的区别"><a href="#gt-gt-与-gt-gt-gt-的区别" class="headerlink" title="&gt;&gt; 与 &gt;&gt;&gt; 的区别"></a>&gt;&gt; 与 &gt;&gt;&gt; 的区别</h1><p>1、当移位的数是正数的时候，&gt;&gt; 和&gt;&gt;&gt;效果都是一样的；<br>2、当移位的数是负数的时候，&gt;&gt;将二进制高位用1补上，而&gt;&gt;&gt;将二进制高位用0补上，这就导致了&gt;&gt;&gt;将负数的移位操作结果变成了正数（因为高位用0补上了）。</p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><code>float f = 1;</code>正确<br><code>float f = 1.0;</code>错误<br>第一种默认类型是int类型，精度由低像高转时，不会丢失进度，进而也不会报错<br>第二种是由高像低转，报错必须加上f。</p>
+<p>byte的值的范围：(-128,127)。</p>
+<p>boolean类型 不能强转 int类型</p>
+<p>定义数组：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int a[][] = new int [n][m];</span><br></pre></td></tr></table></figure>
+
+<p><code>m</code>必须有，<code>n</code>可以没有</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int a[][] = &#123;&#123;1,2,3&#125;,&#123;4,5,6&#125;,&#123;7,8,9&#125;,&#123;2,5,8&#125;&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="内部类使用外部类的局部变量为什么要加final"><a href="#内部类使用外部类的局部变量为什么要加final" class="headerlink" title="内部类使用外部类的局部变量为什么要加final"></a>内部类使用外部类的局部变量为什么要加final</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">final int a = 1;</span><br><span class="line">	new B()&#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void fun() &#123;</span><br><span class="line">			System.out.println(a);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="初始值"><a href="#初始值" class="headerlink" title="初始值"></a>初始值</h1><p>成员变量有初始值，而局部变量没有初始值。</p>
+<h1 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h1><p>进程是资源分配的基本单位，线程是调度的基本单位。进程包含线程，线程共用进程的资源。</p>
+<h1 id="assets和raw的区别"><a href="#assets和raw的区别" class="headerlink" title="assets和raw的区别"></a>assets和raw的区别</h1><h2 id="相同点"><a href="#相同点" class="headerlink" title="相同点"></a>相同点</h2><p>两者目录下的文件都会原封不动的保存在apk包中，不会被编译成二进制</p>
+<h2 id="不同点"><a href="#不同点" class="headerlink" title="不同点"></a>不同点</h2><ol>
+<li>raw会被映射道R.java文件中，可以直接R.id.filename<br>assets文件夹下的文件不会映射到R.java中，访问需要AssetManager</li>
+<li>raw不可以有目录结构，assets可以有随意的目录</li>
+<li>在AssetManager中不能处理单个超过1MB的文件，不然会报异常，而raw无限制</li>
+</ol>
+<h1 id="Bitmap"><a href="#Bitmap" class="headerlink" title="Bitmap"></a>Bitmap</h1><p>Bitmap.Config ARGB_4444：每个像素占四位，即A=4，R=4，G=4，B=4，那么一个像素点占4+4+4+4=16位 </p>
+<p>Bitmap.Config ARGB_8888：每个像素占四位，即A=8，R=8，G=8，B=8，那么一个像素点占8+8+8+8=32位</p>
+<p>Bitmap.Config RGB_565：每个像素占四位，即R=5，G=6，B=5，没有透明度，那么一个像素点占5+6+5=16位</p>
+<p>Bitmap.Config ALPHA_8：每个像素占四位，只有透明度，没有颜色。</p>
+<p>一般情况下我们都是使用的ARGB_8888，由此可知它是最占内存的，因为一个像素占32位，8位=1字节，所以一个像素占4字节的内存。假设有一张480x800的图片，如果格式为ARGB_8888，那么将会占用1500KB的内存。</p>
+<h1 id="枚举类型"><a href="#枚举类型" class="headerlink" title="枚举类型"></a>枚举类型</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">//枚举类型，使用关键字enum</span><br><span class="line">enum Day &#123;</span><br><span class="line">    MONDAY, TUESDAY, WEDNESDAY,</span><br><span class="line">    THURSDAY, FRIDAY, SATURDAY, SUNDAY</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//反编译Day.class</span><br><span class="line">final class Day extends Enum</span><br><span class="line">&#123;</span><br><span class="line">    //编译器为我们添加的静态的values()方法</span><br><span class="line">    public static Day[] values()</span><br><span class="line">    &#123;</span><br><span class="line">        return (Day[])$VALUES.clone();</span><br><span class="line">    &#125;</span><br><span class="line">    //编译器为我们添加的静态的valueOf()方法，注意间接调用了Enum也类的valueOf方法</span><br><span class="line">    public static Day valueOf(String s)</span><br><span class="line">    &#123;</span><br><span class="line">        return (Day)Enum.valueOf(com/zejian/enumdemo/Day, s);</span><br><span class="line">    &#125;</span><br><span class="line">    //私有构造函数</span><br><span class="line">    private Day(String s, int i)</span><br><span class="line">    &#123;</span><br><span class="line">        super(s, i);</span><br><span class="line">    &#125;</span><br><span class="line">     //前面定义的7种枚举实例</span><br><span class="line">    public static final Day MONDAY;</span><br><span class="line">    public static final Day TUESDAY;</span><br><span class="line">    public static final Day WEDNESDAY;</span><br><span class="line">    public static final Day THURSDAY;</span><br><span class="line">    public static final Day FRIDAY;</span><br><span class="line">    public static final Day SATURDAY;</span><br><span class="line">    public static final Day SUNDAY;</span><br><span class="line">    private static final Day $VALUES[];</span><br><span class="line"></span><br><span class="line">    static </span><br><span class="line">    &#123;    </span><br><span class="line">        //实例化枚举实例</span><br><span class="line">        MONDAY = new Day(&quot;MONDAY&quot;, 0);</span><br><span class="line">        TUESDAY = new Day(&quot;TUESDAY&quot;, 1);</span><br><span class="line">        WEDNESDAY = new Day(&quot;WEDNESDAY&quot;, 2);</span><br><span class="line">        THURSDAY = new Day(&quot;THURSDAY&quot;, 3);</span><br><span class="line">        FRIDAY = new Day(&quot;FRIDAY&quot;, 4);</span><br><span class="line">        SATURDAY = new Day(&quot;SATURDAY&quot;, 5);</span><br><span class="line">        SUNDAY = new Day(&quot;SUNDAY&quot;, 6);</span><br><span class="line">        $VALUES = (new Day[] &#123;</span><br><span class="line">            MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="单例模式的几种写法"><a href="#单例模式的几种写法" class="headerlink" title="单例模式的几种写法"></a>单例模式的几种写法</h1><h2 id="饿汉："><a href="#饿汉：" class="headerlink" title="饿汉："></a>饿汉：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 饿汉式（基于classloder机制避免了多线程的同步问题）</span><br><span class="line"> */</span><br><span class="line">public class SingletonHungry &#123;</span><br><span class="line"></span><br><span class="line">    private static SingletonHungry instance = new SingletonHungry();</span><br><span class="line"></span><br><span class="line">    private SingletonHungry() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static SingletonHungry getInstance() &#123;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="懒汉："><a href="#懒汉：" class="headerlink" title="懒汉："></a>懒汉：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 懒汉式（双重检查锁）</span><br><span class="line"> */</span><br><span class="line">public class Singleton &#123;</span><br><span class="line">	//保证执行的顺序（可能会出现乱序执行）</span><br><span class="line">    private static volatile Singleton singleton = null;</span><br><span class="line"></span><br><span class="line">    private Singleton()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    public static Singleton getSingleton()&#123;</span><br><span class="line">        if(singleton == null)&#123;</span><br><span class="line">            synchronized (Singleton.class)&#123;</span><br><span class="line">                if(singleton == null)&#123;</span><br><span class="line">                    singleton = new Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return singleton;</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>线程 1 进入 getInstance() 方法。</li>
+<li>由于 instance 为 null，线程 1 在 //1 处进入 synchronized 块。 </li>
+<li>线程 1 前进到 //3 处，但在构造函数执行之前，使实例成为非 null。 </li>
+<li>线程 1 被线程 2 预占。</li>
+<li>线程 2 检查实例是否为 null。因为实例不为 null，线程 2 将 instance 引用返回给一个构造完整但部分初始化了的 Singleton对象。 </li>
+<li>线程 2 被线程 1 预占。</li>
+<li>线程 1 通过运行 Singleton 对象的构造函数并将引用返回给它，来完成对该对象的初始化。</li>
+</ol>
+<h2 id="静态内部类："><a href="#静态内部类：" class="headerlink" title="静态内部类："></a>静态内部类：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 静态内部类</span><br><span class="line"> */</span><br><span class="line">public class SingletonInner &#123;</span><br><span class="line">    private static class Holder &#123;</span><br><span class="line">        private static SingletonInner singleton = new SingletonInner();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private SingletonInner()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    public static SingletonInner getSingleton()&#123;</span><br><span class="line">        return Holder.singleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="枚举："><a href="#枚举：" class="headerlink" title="枚举："></a>枚举：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 枚举单利</span><br><span class="line"> */</span><br><span class="line">public enum  SingletonEnum &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">    private String name;</span><br><span class="line">    public String getName()&#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line">    public void setName(String name)&#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Java线程池"><a href="#Java线程池" class="headerlink" title="Java线程池"></a>Java线程池</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public ThreadPoolExecutor(  </span><br><span class="line">	//核心线程数，除非allowCoreThreadTimeOut被设置为true，否则它闲着也不会死  </span><br><span class="line">	int corePoolSize,   </span><br><span class="line">	//最大线程数，活动线程数量超过它，后续任务就会排队                     </span><br><span class="line">	int maximumPoolSize,   </span><br><span class="line">	//超时时长，作用于非核心线程（allowCoreThreadTimeOut被设置为true时也会同时作用于核心线程），闲置超时便被回收             </span><br><span class="line">	long keepAliveTime,                            </span><br><span class="line">	//枚举类型，设置keepAliveTime的单位，有TimeUnit.MILLISECONDS（ms）、TimeUnit. SECONDS（s）等  </span><br><span class="line">	TimeUnit unit,  </span><br><span class="line">	//缓冲任务队列，线程池的execute方法会将Runnable对象存储起来  </span><br><span class="line">	BlockingQueue&lt;Runnable&gt; workQueue,  </span><br><span class="line">	//线程工厂接口，只有一个new Thread(Runnable r)方法，可为线程池创建新线程  </span><br><span class="line">	ThreadFactory threadFactory)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>当currentSize&lt;corePoolSize时，没什么好说的，直接启动一个核心线程并执行任务。</li>
+<li>当currentSize&gt;=corePoolSize、并且workQueue未满时，添加进来的任务会被安排到workQueue中等待执行。</li>
+<li>当workQueue已满，但是currentSize&lt;maximumPoolSize时，会立即开启一个非核心线程来执行任务。</li>
+<li>当currentSize&gt;=corePoolSize、workQueue已满、并且currentSize&gt;maximumPoolSize时，根据线程池的不同策略进行不同的操作。</li>
+</ol>
+<h2 id="Java线程池的默认四种"><a href="#Java线程池的默认四种" class="headerlink" title="Java线程池的默认四种"></a>Java线程池的默认四种</h2><ol>
+<li>FixThreadPool<br>只有有限个核心线程，任务队列无限制</li>
+<li>SingleThreadPool<br>只有一个核心线程，任务队列无限制</li>
+<li>CachedThreadPool<br>无核心线程，所有任务都被立即执行 </li>
+<li>ScheduledThreadPool<br>有限个核心线程固定 + 无限非核心线程（无任务时会被回收）主要用于执行定时任务以及周期重复任务</li>
+</ol>
+<h2 id="四种策略"><a href="#四种策略" class="headerlink" title="四种策略"></a>四种策略</h2><ol>
+<li>抛异常</li>
+<li>使用调用该任务的线程去执行（例如，在<code>Thread1</code>中调用ThreadLocal.execute(Runnable)，则会让<code>Thread1</code>去执行）</li>
+<li>将新插入的任务抛弃</li>
+<li>移除队列中的旧任务，并将新任务插入到线程池中。<h1 id="Http方法"><a href="#Http方法" class="headerlink" title="Http方法"></a>Http方法</h1>GET：查 请求指定的页面信息，并返回实体主体。<code>数据在 URL 中对所有人都是可见的。</code><br>POST：增 向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。<code>数据不会显示在 URL 中。放在请求body中</code><br>PUT：改 从客户端向服务器传送的数据取代指定的文档的内容。POST也可以完成<br>DELETE：删     请求服务器删除指定的页面。</li>
+</ol>
+<h1 id="equals和hashcode"><a href="#equals和hashcode" class="headerlink" title="equals和hashcode"></a>equals和hashcode</h1><h2 id="重写equal"><a href="#重写equal" class="headerlink" title="重写equal"></a>重写equal</h2><ol>
+<li>自反性。对于任何非null的引用值x，x.equals(x)应返回true。</li>
+<li>对称性。对于任何非null的引用值x与y，当且仅当：y.equals(x)返回true时，x.equals(y)才返回true。</li>
+<li>传递性。对于任何非null的引用值x、y与z，如果y.equals(x)返回true，y.equals(z)返回true，那么x.equals(z)也应返回true。</li>
+<li>一致性。对于任何非null的引用值x与y，假设对象上equals比较中的信息没有被修改，则多次调用x.equals(y)始终返回true或者始终返回false。</li>
+<li>对于任何非空引用值x，x.equal(null)应返回false。</li>
+</ol>
+<h2 id="hashcode"><a href="#hashcode" class="headerlink" title="hashcode"></a>hashcode</h2><ol>
+<li>hashcode在object的实现是根据对象的存放地址来实现的</li>
+</ol>
+<h2 id="重写了equal为什么还要重写hashcode"><a href="#重写了equal为什么还要重写hashcode" class="headerlink" title="重写了equal为什么还要重写hashcode"></a>重写了equal为什么还要重写hashcode</h2><ol>
+<li>如果两个对象通过调用equals方法是相等的，那么这两个对象调用hashCode方法必须返回相同的整数。</li>
+<li>如果两个对象通过调用equals方法是不相等的，不要求这两个对象调用hashCode方法必须返回不同的整数。但是程序员应该意识到对不同的对象产生不同的hash值可以提供哈希表的性能。</li>
+</ol>
+<h1 id="try-catch-finally-中的Return"><a href="#try-catch-finally-中的Return" class="headerlink" title="try catch finally 中的Return"></a>try catch finally 中的Return</h1><h2 id="不抛出异常，try-catch-finally都有Return："><a href="#不抛出异常，try-catch-finally都有Return：" class="headerlink" title="不抛出异常，try catch finally都有Return："></a>不抛出异常，try catch finally都有Return：</h2><p>结果：返回的值是finally的</p>
+<h2 id="不抛出异常，try-catch有Return，但在finally中改变返回值（如在try中返回result，在finally中result-）"><a href="#不抛出异常，try-catch有Return，但在finally中改变返回值（如在try中返回result，在finally中result-）" class="headerlink" title="不抛出异常，try catch有Return，但在finally中改变返回值（如在try中返回result，在finally中result++）"></a>不抛出异常，try catch有Return，但在finally中改变返回值（如在try中返回result，在finally中result++）</h2><p>结果：返回值不受finally的改变</p>
+<h2 id="抛出异常，try-catch-finally都有Return："><a href="#抛出异常，try-catch-finally都有Return：" class="headerlink" title="抛出异常，try catch finally都有Return："></a>抛出异常，try catch finally都有Return：</h2><p>结果：返回值是finally的</p>
+<h2 id="抛出异常，try-catch有Return，但在finally中改变返回值（如在catch中返回result，在finally中result-）："><a href="#抛出异常，try-catch有Return，但在finally中改变返回值（如在catch中返回result，在finally中result-）：" class="headerlink" title="抛出异常，try catch有Return，但在finally中改变返回值（如在catch中返回result，在finally中result++）："></a>抛出异常，try catch有Return，但在finally中改变返回值（如在catch中返回result，在finally中result++）：</h2><p>结果：返回值不受finally的改变</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>只要在finally中有return语句，那么肯定是返回finally中的值。</li>
+<li>如果在try或者catch有return语句，而finally中没有，无论在finally中是否改变返回值，都不生效，返回try或者catch中的值</li>
+</ol>
+<h1 id="对象的访问"><a href="#对象的访问" class="headerlink" title="对象的访问"></a>对象的访问</h1><p>直接引用：<br>直接指向实例数据（包含类的类型数据（在方法区））<br>优点：访问该对象时，可以少一次定位<br>句柄引用：<br>指向一个句柄，句柄中有两个地址：实例数据地址和对象类型数据地址<br>优点：当对象移动时，句柄引用不用变，只需要改变句柄中的地址就可以</p>
+<h1 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h1><ol>
+<li>首先去方法区查找有没有该类的数据，也就是有没有被加载过，如果没有则进行加载</li>
+<li>分配内存，根据堆是否规整来决定不同的方式，规整：指针碰撞，不规整：空闲列表</li>
+<li>初始化分配到的内存</li>
+<li>对象头的设置（如这个对象是哪个类的实例，GC年龄，哈希码等）</li>
+<li>执行init方法</li>
+</ol>
+<h1 id="类的加载过程"><a href="#类的加载过程" class="headerlink" title="类的加载过程"></a>类的加载过程</h1><h2 id="加载："><a href="#加载：" class="headerlink" title="加载："></a>加载：</h2><p>通过一个全限定名获取对应的二进制流（class文件，JAR包等）<br>将二进制流的存储结构转换成方法区对应的数据结构<br>并在方法区存放一个相应的类的对象，用来找到方法区中的数据的入口。（引用在方法区中。实力数据存放在堆中）</p>
+<h2 id="验证："><a href="#验证：" class="headerlink" title="验证："></a>验证：</h2><h3 id="文件格式验证"><a href="#文件格式验证" class="headerlink" title="文件格式验证"></a>文件格式验证</h3><p>验证文件格式是否正确，如魔数是不是0xCAFEBABY等</p>
+<h3 id="元数据验证"><a href="#元数据验证" class="headerlink" title="元数据验证"></a>元数据验证</h3><p>验证这个类是否有父类，这个类是否继承了final类等</p>
+<h3 id="字节码验证"><a href="#字节码验证" class="headerlink" title="字节码验证"></a>字节码验证</h3><p>验证在运行时不会对虚拟机有危害</p>
+<h3 id="字符引用验证"><a href="#字符引用验证" class="headerlink" title="字符引用验证"></a>字符引用验证</h3><p>验证符号引用中的类，字段，方法的访问性是否被当前类访问等</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>静态变量的初始化</p>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>将符号引用解析成直接饮用，如：类，类方法解析，接口，接口方法解析，方法类型，字段等</p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>执行static代码块</p>
+<h1 id="JVM的运行时内存"><a href="#JVM的运行时内存" class="headerlink" title="JVM的运行时内存"></a>JVM的运行时内存</h1><h2 id="程序计数器（线程私有）"><a href="#程序计数器（线程私有）" class="headerlink" title="程序计数器（线程私有）"></a>程序计数器（线程私有）</h2><p>因为Java是通过线程轮流切换来实现多线程的，那么在一个确定的时刻，只有一个线程在运行，当切换回来时，为了能够恢复到正确的执行位置，程序计数器保存的就是当前执行到的字节码的行号指示器</p>
+<h2 id="虚拟机栈（线程私有）"><a href="#虚拟机栈（线程私有）" class="headerlink" title="虚拟机栈（线程私有）"></a>虚拟机栈（线程私有）</h2><p>一个方法的执行和结束对应着一个栈帧的入栈和出栈。<br>这个栈帧保存着基本数据类型，引用（可能是实例数据的首地址，也有可能是句柄），方法的出口等</p>
+<h2 id="方法区（线程共享）"><a href="#方法区（线程共享）" class="headerlink" title="方法区（线程共享）"></a>方法区（线程共享）</h2><p>里面存放着类的类元数据，常量，静态变量等</p>
+<h2 id="堆（线程共享）"><a href="#堆（线程共享）" class="headerlink" title="堆（线程共享）"></a>堆（线程共享）</h2><p>里面存放实例数据</p>
+<h1 id="Android-ANR"><a href="#Android-ANR" class="headerlink" title="Android ANR"></a>Android ANR</h1><ol>
+<li><p>KeyDispatchTimeout(5 seconds) –主要类型按键或触摸事件在特定时间内无响应</p>
+</li>
+<li><p>BroadcastTimeout(10 seconds) –BroadcastReceiver在特定时间内无法处理完成</p>
+</li>
+<li><p>ServiceTimeout(20 seconds) –小概率类型 Service在特定的时间内无法处理完成</p>
+</li>
+</ol>
+<h1 id="内存溢出和内存泄漏的区别"><a href="#内存溢出和内存泄漏的区别" class="headerlink" title="内存溢出和内存泄漏的区别"></a>内存溢出和内存泄漏的区别</h1><ol>
+<li><p>内存溢出 <code>Out Of Memory</code>，是指程序在申请内存时，没有足够的内存空间供其使用，出现out of memory；比如申请了一个integer,但给它存了long才能存下的数，那就是内存溢出。</p>
+</li>
+<li><p>内存泄露 <code>Memory Leak</code>，是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄露危害可以忽略，但内存泄露堆积后果很严重，无论多少内存,迟早会被占光。</p>
+</li>
+</ol>
+<p>Memory Leak会最终会导致Out Of Memory！</p>
+<p>内存溢出就是你要求分配的内存超出了系统能给你的，系统不能满足需求，于是产生溢出。 </p>
+<h1 id="常见的内存泄漏"><a href="#常见的内存泄漏" class="headerlink" title="常见的内存泄漏"></a>常见的内存泄漏</h1><ol>
+<li><p>Handler泄漏</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">private final Handler handler = new Handler() &#123;  </span><br><span class="line">    @Override  </span><br><span class="line">    public void handleMessage(Message msg) &#123;  </span><br><span class="line">  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;;  </span><br><span class="line"></span><br><span class="line">@Override  </span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;  </span><br><span class="line">    super.onCreate(savedInstanceState);  </span><br><span class="line">    setContentView(R.layout.activity_main);  </span><br><span class="line">	//非静态内部类Handler会持有外部类的引用</span><br><span class="line">	//消息会持有Handler的引用</span><br><span class="line">	//这条消息没有处理，那么Activity就不能回收，导致内存泄漏</span><br><span class="line">	//改进：</span><br><span class="line">	//静态内部类，并使用弱引用指向Activity</span><br><span class="line">    handler.postDelayed(new Runnable() &#123;  </span><br><span class="line">        @Override  </span><br><span class="line">        public void run() &#123; /* ... */ &#125;  </span><br><span class="line">    &#125;, Integer.MAX_VALUE);   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>非静态内部类泄漏</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class MyActivity extends Activity &#123;  </span><br><span class="line">    //非静态内部类InnerClass创建的静态实例mInnerClass</span><br><span class="line">	//非静态内部类会持有外部类的引用</span><br><span class="line">	//改进：</span><br><span class="line">	//在onDestroy方法中手动将mInnerClass置为null。</span><br><span class="line">	//将内部类定义为静态内部类，使其不能与外部类建立关系。</span><br><span class="line">    private static InnerClass mInnerClass = null;  </span><br><span class="line">    @Override  </span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;  </span><br><span class="line">        super.onCreate(savedInstanceState);  </span><br><span class="line">        setContentView(R.layout.main);  </span><br><span class="line">        mInnerClass = new InnerClass();  </span><br><span class="line">    &#125;  </span><br><span class="line">     class InnerClass&#123;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>单例模式泄漏</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class SingleUtils &#123;  </span><br><span class="line">    private static SingleUtils mInstance = null;  </span><br><span class="line">    private Context context;  </span><br><span class="line">	//假如我们传进来的是一个Activity，那么当Activity执行onDestroy以后</span><br><span class="line">	//并不会回收掉Activity，这是因为单例模式中的静态变量持有他的引用，而静态变量的生命周期是和应用相同的</span><br><span class="line">	//改进：</span><br><span class="line">	//在此处持有context.getApplicationContext()</span><br><span class="line">	//ApplicationContext的生命周期与应用相同</span><br><span class="line">    private SingleUtils (Context context)&#123;  </span><br><span class="line">        this.context = context;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    public static SingleUtils getInstance(Context context)&#123;  </span><br><span class="line">        if(mInstance == null)&#123;  </span><br><span class="line">            mInstance = new SingleUtils (context);  </span><br><span class="line">        &#125;  </span><br><span class="line">        return mInstance;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    public Object getObject()&#123;//根据业务逻辑传入参数  </span><br><span class="line">        //返回业务逻辑结果，这里需要用到context  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>AsyncTask泄漏</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@Override  </span><br><span class="line">protected void onCreate(Bundle savedInstanceState) &#123;  </span><br><span class="line">    super.onCreate(savedInstanceState);  </span><br><span class="line">    setContentView(R.layout.activity_main);  </span><br><span class="line">  </span><br><span class="line">    new AsyncTask&lt;Void, Void, Void&gt;() &#123;  </span><br><span class="line">        @Override  </span><br><span class="line">        protected Void doInBackground(Void... params) &#123;  </span><br><span class="line">            //子线程中持有Activity的引用  </span><br><span class="line">            //子线程在Activity销毁后依然会继续执行，导致该Activity内存泄漏  </span><br><span class="line">			//改进：</span><br><span class="line">			//在onDestroy中中断子线程的运行。</span><br><span class="line">			//使用全局的线程池代替在类中创建子线程。</span><br><span class="line">            while (true) ;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;.execute();  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="内存泄漏如何检测"><a href="#内存泄漏如何检测" class="headerlink" title="内存泄漏如何检测"></a>内存泄漏如何检测</h1><p>通过LeakCanary工具</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">	debugCompile &apos;com.squareup.leakcanary:leakcanary-android:1.3&apos;</span><br><span class="line">	//只在debug中使用，在正式版中不使用</span><br><span class="line">	releaseCompile &apos;com.squareup.leakcanary:leakcanary-android-no-op:1.3&apos;</span><br><span class="line">&#125;</span><br><span class="line">//自定义Application并装载LeakCanary</span><br><span class="line">public class ExampleApplication extends Application &#123;</span><br><span class="line"></span><br><span class="line">  @Override public void onCreate() &#123;</span><br><span class="line">    super.onCreate();</span><br><span class="line">    LeakCanary.install(this);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/LeakCanary.jpg" alt="运行示意图"></p>
+<h1 id="Android程序Crash时的异常上报"><a href="#Android程序Crash时的异常上报" class="headerlink" title="Android程序Crash时的异常上报"></a>Android程序Crash时的异常上报</h1><ol>
+<li>实现UncaughtExceptionHandler，在其中可以将堆栈信息写到本地文件，也可以发送到服务器端，最好将手机型号，Android版本号，应用当前版本号等信息一并写入文件中。</li>
+<li>在自定义Application中装载该类</li>
+</ol>
+<h1 id="Service和IntentService的区别"><a href="#Service和IntentService的区别" class="headerlink" title="Service和IntentService的区别"></a>Service和IntentService的区别</h1><p>Service：不适合执行耗时操作（执行在主线程），执行耗时操作会导致ANR（20S）<br>IntentService：自带子线程（HandlerThread），并且执行完后会自动退出。，与Thread比，他的优先级更高，属于服务进程，不容易被系统杀死。onHandleIntent()在子线程中执行<br>HandlerThread中的run方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void run() &#123;</span><br><span class="line">	mTid = Process.myTid();</span><br><span class="line">	Looper.prepare();</span><br><span class="line">	synchronized (this) &#123;</span><br><span class="line">		mLooper = Looper.myLooper();</span><br><span class="line">		notifyAll();</span><br><span class="line">	&#125;</span><br><span class="line">	Process.setThreadPriority(mPriority);</span><br><span class="line">	onLooperPrepared();</span><br><span class="line">	Looper.loop();</span><br><span class="line">	mTid = -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Service-如何保活"><a href="#Service-如何保活" class="headerlink" title="Service 如何保活"></a>Service 如何保活</h1><ol>
+<li>设置前台</li>
+<li>设置onStartCommand的返回值<code>START_STICKY</code></li>
+<li>设置优先级<code>priority</code>（貌似没有用）</li>
+<li>在onDestroy()中再次启动自己</li>
+<li>放置一个像素点，保证自己的优先级</li>
+</ol>
+<h1 id="Activity的四种启动模式："><a href="#Activity的四种启动模式：" class="headerlink" title="Activity的四种启动模式："></a>Activity的四种启动模式：</h1><ol>
+<li><p>standard：默认启动模式，每次激活Activity时都会创建Activity，并放入任务栈中。</p>
+</li>
+<li><p>singleTop：如果在任务的栈顶正好存在该Activity的实例，就重用该实例，否者就会创建新的实例并放入栈顶(即使栈中已经存在该Activity实例，只要不在栈顶，都会创建实例)。</p>
+</li>
+<li><p>singleTask：如果在栈中已经有该Activity的实例，就重用该实例(会调用实例的onNewIntent())。重用时，会让该实例回到栈顶，因此在它上面的实例将会被移除栈。如果栈中不存在该实例，将会创建新的实例放入栈中。 </p>
+</li>
+<li><p>singleInstance：在一个新栈中创建该Activity实例，并让多个应用共享改栈中的该Activity实例。一旦改模式的Activity的实例存在于某个栈中，任何应用再激活改Activity时都会重用该栈中的实例，其效果相当于多个应用程序共享一个应用，不管谁激活该Activity都会进入同一个应用中。</p>
+</li>
+</ol>
+<p>复用时生命周期函数：<code>onNewIntent()----&gt;onResart()------&gt;onStart()-----&gt;onResume()</code></p>
+<h1 id="HashMap，HashTable和HashSet的区别"><a href="#HashMap，HashTable和HashSet的区别" class="headerlink" title="HashMap，HashTable和HashSet的区别"></a>HashMap，HashTable和HashSet的区别</h1><h2 id="HashMap和HashTable"><a href="#HashMap和HashTable" class="headerlink" title="HashMap和HashTable"></a>HashMap和HashTable</h2><h3 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h3><ol>
+<li>HashMap线程不安全，HashTable线程安全（效率较低，推荐使用ConcurrentHashMap）</li>
+<li>HashMap允许NULL键和NULL值，NULL键默认保存在数组的第0个位置，HashTable不允许任何的NULL键和NULL值。</li>
+<li>HashMap默认16大小，扩容必定为2的幂，HashTable默认11大小，扩容为Old*2-1。</li>
+</ol>
+<h3 id="相同："><a href="#相同：" class="headerlink" title="相同："></a>相同：</h3><ol>
+<li>都使用拉链法来解决哈希冲突</li>
+<li>加载因子都默认为0.75</li>
+</ol>
+<h2 id="HashMap和HashSet"><a href="#HashMap和HashSet" class="headerlink" title="HashMap和HashSet"></a>HashMap和HashSet</h2><p><img src="/images/hashmapandhashset.png" alt="启动示意图"></p>
+<h1 id="ListView的缓存机制RecycleBin"><a href="#ListView的缓存机制RecycleBin" class="headerlink" title="ListView的缓存机制RecycleBin"></a>ListView的缓存机制RecycleBin</h1><ol>
+<li><p>private View[] mActiveViews = new View[0]</p>
+</li>
+<li><p>private ArrayList<view>[] mScrapViews</view></p>
+</li>
+</ol>
+<h1 id="一个APP的启动过程"><a href="#一个APP的启动过程" class="headerlink" title="一个APP的启动过程"></a>一个APP的启动过程</h1><p><img src="/images/appluncher.png" alt="启动示意图"></p>
+<ol>
+<li>ActivityManagerService组织回退栈时以ActivityRecord为基本单位，所有的ActivityRecord放在同一个ArrayList里，可以将mHistory看作一个栈对象，索引0所指的对象位于栈底，索引mHistory.size()-1所指的对象位于栈顶</li>
+<li>Zygote进程孵化出新的应用进程后，会执行ActivityThread类的main方法.在该方法里会先准备好Looper和消息队列，然后调用attach方法将应用进程绑定到ActivityManagerService，然后进入loop循环，不断地读取消息队列里的消息，并分发消息。</li>
+<li>ActivityThread的main方法执行后,应用进程接下来通知ActivityManagerService应用进程已启动，ActivityManagerService保存应用进程的一个代理对象，这样ActivityManagerService可以通过这个代理对象控制应用进程，然后ActivityManagerService通知应用进程创建入口Activity的实例，并执行它的生命周期方法</li>
+</ol>
+<h1 id="String类型"><a href="#String类型" class="headerlink" title="String类型"></a>String类型</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//指向堆中实例数据</span><br><span class="line">String aString = new String(&quot;1&quot;);</span><br><span class="line">//指向方法区</span><br><span class="line">String bString = &quot;1&quot;;</span><br><span class="line">System.out.println(aString == bString);</span><br></pre></td></tr></table></figure>
+
+<p>输出：<code>false</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//强制将对象存放在方法区</span><br><span class="line">String aString = new String(&quot;1&quot;).intern();</span><br><span class="line">//指向方法区</span><br><span class="line">String bString = &quot;1&quot;;</span><br><span class="line">System.out.println(aString == bString);</span><br></pre></td></tr></table></figure>
+
+<p>输出：<code>true</code></p>
+<h1 id="JNI和NDK"><a href="#JNI和NDK" class="headerlink" title="JNI和NDK"></a>JNI和NDK</h1><p>JNI：是Java的本地方法接口<code>Java Native Interface</code>，因为Java跨平台的特性，所以与本地代码交互能力弱，所以通过本地方法来提高交互能力（C/C++）</p>
+<p>NDK: Android的一个开发工具包<code>Native Development Kit</code>，与Java无直接关系，是用来实现Java和本地方法的快捷工具，可以自动的将动态链接库<code>SO</code>和<code>Java</code>应用一起打包<br>特点：</p>
+<ol>
+<li>运行效率高（在开发高性能的应用时，效率更加高）</li>
+<li>代码安全性好（Java是半解释语言，很容易通过反编译得到源代码，而C/C++不会）</li>
+<li>功能拓展性好（除了可以使用Java的开源库以外，还可以使用C/C++的开源库）</li>
+<li>易于代码的复用和移植（如从Android移植到IOS）</li>
+</ol>
+<h1 id="横竖屏切换对Activity生命周期的影响"><a href="#横竖屏切换对Activity生命周期的影响" class="headerlink" title="横竖屏切换对Activity生命周期的影响"></a>横竖屏切换对Activity生命周期的影响</h1><p>默认情况：<br>刚刚启动Activity的时候：<br>Activity1—–&gt;onCreate<br>Activity1—–&gt;onStart<br>Activity1—–&gt;onResume<br>模拟器中按下Ctrl+F11或者Ctrl+F12由竖屏切换到横屏：<br>Activity—–&gt;onPause<br>Activity—–&gt;onSaveInstanceState<br>Activity—–&gt;onStop<br>Activity—–&gt;onDestroy<br>Activity—–&gt;onCreate<br>Activity—–&gt;onStart<br>Activity—–&gt;onRestoreInstanceState<br>Activity—–&gt;onResume<br>模拟器中按下Ctrl+F11或者Ctrl+F12由横屏切换到竖屏：<br>Activity—–&gt;onPause<br>Activity—–&gt;onSaveInstanceState<br>Activity—–&gt;onStop<br>Activity—–&gt;onDestroy<br>Activity—–&gt;onCreate<br>Activity—–&gt;onStart<br>Activity—–&gt;onRestoreInstanceState<br>Activity—–&gt;onResume<br>在默认情况下，当横竖屏切换时会<code>重新创建</code>Activity并且调用<code>onSaveInstanceState</code>来保存切换之前的状态，在<code>onRestoreInstanceState</code>或者<code>onCreate</code>中可以恢复</p>
+<p>当我们设置Activity的android:configChanges属性为orientation|screenSize|keyboardHidden时：<br>刚刚启动Activity的时候：<br>Activity—–&gt;onCreate<br>Activity—–&gt;onStart<br>Activity—–&gt;onResume<br>模拟器中按下Ctrl+F11或者Ctrl+F12由横屏切换到竖屏：<br>Activity—–&gt;onConfigurationChanged<br>模拟器中按下Ctrl+F11或者Ctrl+F12由横屏切换到竖屏：<br>Activity—–&gt;onConfigurationChanged</p>
+<p>在设置了Activity的android:configChanges属性后，他<code>不会重新创建</code>，而是调用<code>onConfigurationChanged</code>方法</p>
+<h1 id="Java中的集合："><a href="#Java中的集合：" class="headerlink" title="Java中的集合："></a>Java中的集合：</h1><p>线程安全的：<br>ConcurrentHashMap（推荐使用）<br>HashTable（不推荐，效率低）<br>Vector<br>Collection.synchronizedMap(new HashMap())<br>Collection.synchronizedList(new ArrayList())<br>StringBuffer（慢）<br>线程不安全的：<br>ArrayList<br>HashMap<br>LinkedHashMap（继承自HashMap可以根据插入顺序，或者读取顺序排序，用来实现LruCatch算法）<br>StringBuilder（快）</p>
+<p>快速失败机制（fail-fast）：</p>
+<ol>
+<li>它是Java集合的一种错误检测机制。当多个线程对集合进行结构上的改变的操作时，有可能会产生fail-fast机制。记住是有可能，而不是一定。例如：假设存在两个线程（线程1、线程2），线程1通过Iterator在遍历集合A中的元素，在某个时候线程2修改了集合A的结构（是结构上面的修改，而不是简单的修改集合元素的内容），那么这个时候程序就会抛出 ConcurrentModificationException 异常，从而产生fail-fast机制。<br>当<code>modCount</code>不等于<code>expectedModCount</code>触发fail-fast。</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/31/AsyncTask的原理/" rel="next" title="AsyncTask的原理">
+                <i class="fa fa-chevron-left"></i> AsyncTask的原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/14/TCP的三次握手和四次挥手/" rel="prev" title="TCP的三次握手和四次挥手">
+                TCP的三次握手和四次挥手 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="沈林良">
+          <p class="site-author-name" itemprop="name">沈林良</p>
+           
+              <p class="site-description motion-element" itemprop="description">这是一个博客</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#char能否存储汉字"><span class="nav-number">1.</span> <span class="nav-text">char能否存储汉字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#boolean"><span class="nav-number">2.</span> <span class="nav-text">boolean</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自动拆箱和装箱"><span class="nav-number">3.</span> <span class="nav-text">自动拆箱和装箱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#抽象类和接口"><span class="nav-number">4.</span> <span class="nav-text">抽象类和接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#new一个空的Object，占用几个字节（Object-object-new-Object-）"><span class="nav-number">5.</span> <span class="nav-text">new一个空的Object，占用几个字节（Object object = new Object();）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Volatile的适用场景"><span class="nav-number">6.</span> <span class="nav-text">Volatile的适用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态方法能否调用非静态方法"><span class="nav-number">7.</span> <span class="nav-text">静态方法能否调用非静态方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#synchronized和Lock"><span class="nav-number">8.</span> <span class="nav-text">synchronized和Lock</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java的特性"><span class="nav-number">9.</span> <span class="nav-text">Java的特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#封装"><span class="nav-number">9.1.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承"><span class="nav-number">9.2.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态"><span class="nav-number">9.3.</span> <span class="nav-text">多态</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计模式六大原则"><span class="nav-number">10.</span> <span class="nav-text">设计模式六大原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单一职责"><span class="nav-number">10.1.</span> <span class="nav-text">单一职责</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#里氏替换"><span class="nav-number">10.2.</span> <span class="nav-text">里氏替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖倒置"><span class="nav-number">10.3.</span> <span class="nav-text">依赖倒置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口隔离"><span class="nav-number">10.4.</span> <span class="nav-text">接口隔离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迪米特法则"><span class="nav-number">10.5.</span> <span class="nav-text">迪米特法则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开闭原则"><span class="nav-number">10.6.</span> <span class="nav-text">开闭原则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-中引用类型都有哪些"><span class="nav-number">11.</span> <span class="nav-text">Java 中引用类型都有哪些</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Parcelable和Serializable-俩者异同"><span class="nav-number">12.</span> <span class="nav-text">Parcelable和Serializable 俩者异同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gt-gt-与-gt-gt-gt-的区别"><span class="nav-number">13.</span> <span class="nav-text">&gt;&gt; 与 &gt;&gt;&gt; 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定义"><span class="nav-number">14.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内部类使用外部类的局部变量为什么要加final"><span class="nav-number">15.</span> <span class="nav-text">内部类使用外部类的局部变量为什么要加final</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始值"><span class="nav-number">16.</span> <span class="nav-text">初始值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程和线程的区别"><span class="nav-number">17.</span> <span class="nav-text">进程和线程的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#assets和raw的区别"><span class="nav-number">18.</span> <span class="nav-text">assets和raw的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#相同点"><span class="nav-number">18.1.</span> <span class="nav-text">相同点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不同点"><span class="nav-number">18.2.</span> <span class="nav-text">不同点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bitmap"><span class="nav-number">19.</span> <span class="nav-text">Bitmap</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#枚举类型"><span class="nav-number">20.</span> <span class="nav-text">枚举类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单例模式的几种写法"><span class="nav-number">21.</span> <span class="nav-text">单例模式的几种写法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#饿汉："><span class="nav-number">21.1.</span> <span class="nav-text">饿汉：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#懒汉："><span class="nav-number">21.2.</span> <span class="nav-text">懒汉：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态内部类："><span class="nav-number">21.3.</span> <span class="nav-text">静态内部类：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#枚举："><span class="nav-number">21.4.</span> <span class="nav-text">枚举：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java线程池"><span class="nav-number">22.</span> <span class="nav-text">Java线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java线程池的默认四种"><span class="nav-number">22.1.</span> <span class="nav-text">Java线程池的默认四种</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四种策略"><span class="nav-number">22.2.</span> <span class="nav-text">四种策略</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Http方法"><span class="nav-number">23.</span> <span class="nav-text">Http方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#equals和hashcode"><span class="nav-number">24.</span> <span class="nav-text">equals和hashcode</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#重写equal"><span class="nav-number">24.1.</span> <span class="nav-text">重写equal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hashcode"><span class="nav-number">24.2.</span> <span class="nav-text">hashcode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重写了equal为什么还要重写hashcode"><span class="nav-number">24.3.</span> <span class="nav-text">重写了equal为什么还要重写hashcode</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#try-catch-finally-中的Return"><span class="nav-number">25.</span> <span class="nav-text">try catch finally 中的Return</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#不抛出异常，try-catch-finally都有Return："><span class="nav-number">25.1.</span> <span class="nav-text">不抛出异常，try catch finally都有Return：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不抛出异常，try-catch有Return，但在finally中改变返回值（如在try中返回result，在finally中result-）"><span class="nav-number">25.2.</span> <span class="nav-text">不抛出异常，try catch有Return，但在finally中改变返回值（如在try中返回result，在finally中result++）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抛出异常，try-catch-finally都有Return："><span class="nav-number">25.3.</span> <span class="nav-text">抛出异常，try catch finally都有Return：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抛出异常，try-catch有Return，但在finally中改变返回值（如在catch中返回result，在finally中result-）："><span class="nav-number">25.4.</span> <span class="nav-text">抛出异常，try catch有Return，但在finally中改变返回值（如在catch中返回result，在finally中result++）：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">25.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象的访问"><span class="nav-number">26.</span> <span class="nav-text">对象的访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象的创建"><span class="nav-number">27.</span> <span class="nav-text">对象的创建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类的加载过程"><span class="nav-number">28.</span> <span class="nav-text">类的加载过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加载："><span class="nav-number">28.1.</span> <span class="nav-text">加载：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证："><span class="nav-number">28.2.</span> <span class="nav-text">验证：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件格式验证"><span class="nav-number">28.2.1.</span> <span class="nav-text">文件格式验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元数据验证"><span class="nav-number">28.2.2.</span> <span class="nav-text">元数据验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字节码验证"><span class="nav-number">28.2.3.</span> <span class="nav-text">字节码验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符引用验证"><span class="nav-number">28.2.4.</span> <span class="nav-text">字符引用验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">28.3.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析"><span class="nav-number">28.4.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化"><span class="nav-number">28.5.</span> <span class="nav-text">初始化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM的运行时内存"><span class="nav-number">29.</span> <span class="nav-text">JVM的运行时内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序计数器（线程私有）"><span class="nav-number">29.1.</span> <span class="nav-text">程序计数器（线程私有）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机栈（线程私有）"><span class="nav-number">29.2.</span> <span class="nav-text">虚拟机栈（线程私有）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法区（线程共享）"><span class="nav-number">29.3.</span> <span class="nav-text">方法区（线程共享）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆（线程共享）"><span class="nav-number">29.4.</span> <span class="nav-text">堆（线程共享）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-ANR"><span class="nav-number">30.</span> <span class="nav-text">Android ANR</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存溢出和内存泄漏的区别"><span class="nav-number">31.</span> <span class="nav-text">内存溢出和内存泄漏的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见的内存泄漏"><span class="nav-number">32.</span> <span class="nav-text">常见的内存泄漏</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存泄漏如何检测"><span class="nav-number">33.</span> <span class="nav-text">内存泄漏如何检测</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android程序Crash时的异常上报"><span class="nav-number">34.</span> <span class="nav-text">Android程序Crash时的异常上报</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Service和IntentService的区别"><span class="nav-number">35.</span> <span class="nav-text">Service和IntentService的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Service-如何保活"><span class="nav-number">36.</span> <span class="nav-text">Service 如何保活</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Activity的四种启动模式："><span class="nav-number">37.</span> <span class="nav-text">Activity的四种启动模式：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HashMap，HashTable和HashSet的区别"><span class="nav-number">38.</span> <span class="nav-text">HashMap，HashTable和HashSet的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap和HashTable"><span class="nav-number">38.1.</span> <span class="nav-text">HashMap和HashTable</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#区别："><span class="nav-number">38.1.1.</span> <span class="nav-text">区别：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相同："><span class="nav-number">38.1.2.</span> <span class="nav-text">相同：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap和HashSet"><span class="nav-number">38.2.</span> <span class="nav-text">HashMap和HashSet</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ListView的缓存机制RecycleBin"><span class="nav-number">39.</span> <span class="nav-text">ListView的缓存机制RecycleBin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一个APP的启动过程"><span class="nav-number">40.</span> <span class="nav-text">一个APP的启动过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#String类型"><span class="nav-number">41.</span> <span class="nav-text">String类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JNI和NDK"><span class="nav-number">42.</span> <span class="nav-text">JNI和NDK</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#横竖屏切换对Activity生命周期的影响"><span class="nav-number">43.</span> <span class="nav-text">横竖屏切换对Activity生命周期的影响</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java中的集合："><span class="nav-number">44.</span> <span class="nav-text">Java中的集合：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">沈林良</span>
+</div>
+
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.1"></script>
+
+
+</body>
+</html>
